@@ -1,0 +1,18 @@
+import { chromium } from 'playwright';
+import fs from 'node:fs/promises';
+const browser=await chromium.launch({channel:'chrome',headless:true});
+const page=await browser.newPage({viewport:{width:1440,height:1000},reducedMotion:'reduce'});
+await page.goto('https://bagelmaster.co.uk/',{waitUntil:'domcontentloaded'});await page.waitForTimeout(4000);
+await page.getByRole('button',{name:'Close welcome offer'}).click();
+await page.waitForTimeout(600);
+await page.screenshot({path:'research/captures/bagel-master-desktop.png'});
+await page.screenshot({path:'research/captures/bagel-master-full.png',fullPage:true});
+await page.setViewportSize({width:390,height:844});await page.waitForTimeout(500);
+await page.screenshot({path:'research/captures/bagel-master-mobile.png'});
+await page.setViewportSize({width:1440,height:1000});
+await page.goto('https://bagelmaster.co.uk/menu',{waitUntil:'domcontentloaded'});await page.waitForTimeout(4000);
+const close=page.getByRole('button',{name:'Close welcome offer'});if(await close.isVisible())await close.click();
+await page.screenshot({path:'research/captures/bagel-menu-desktop.png'});
+console.log((await page.locator('body').ariaSnapshot()).slice(0,6500));
+await fs.writeFile('research/bagel-dom.txt',await page.locator('body').ariaSnapshot());
+await browser.close();

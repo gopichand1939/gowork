@@ -1,0 +1,2 @@
+import {Eyebrow,Button} from '@/components/common';
+export default function NotFound(){return <section className="container section"><Eyebrow>404 / PAGE NOT FOUND</Eyebrow><h1 style={{fontSize:'clamp(40px,6vw,80px)',marginBottom:24}}>Let’s get you<br/>back to the work.</h1><p style={{marginBottom:30}}>This page isn’t available. Explore the selected projects or start a conversation.</p><Button href="/work">View selected work</Button></section>}
